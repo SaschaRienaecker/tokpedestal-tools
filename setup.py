@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='tokpedestal-tools',
+    name='pedestal',
     version='1.0.0',
     author='SR',
     author_email='sascha.rienacker@lpp.polyechnique.fr',
