@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit, Bounds
 from scipy.interpolate import interp1d
-from fped_functions import fped
+from .fped_functions import fped
 
 def huber_loss(residuals, delta=1.0): # presently not used, but could be if we want to fine-tune the loss function
     """Huber loss function. The delta parameter controls the threshold between linear and quadratic loss."""
