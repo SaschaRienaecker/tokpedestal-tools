@@ -1,0 +1,13 @@
+*.mat
+*.dat
+*.h5
+*.pyc
+*.depr*
+*.ipynb_checkpoints
+#*.ipynb
+*.pdf
+*.png
+*.egg-info*
+
+#ignore directories by name:
+.archive_gitignored
