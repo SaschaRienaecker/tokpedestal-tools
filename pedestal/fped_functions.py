@@ -10,6 +10,17 @@ def mtanh_py(x, b_slope, c_slope_SOL):
 def fped_py(r, b_height, b_SOL, b_pos, b_width, b_slope, c_slope_SOL):
     return (b_height - b_SOL) / 2 * (mtanh_py((b_pos - r) / (2 * b_width), b_slope, c_slope_SOL) + 1) + b_SOL
 
+def _fped_exp(r, b_height, b_SOL, b_pos, b_width, c_slope_SOL):
+    k_exp=1.0
+    return b_height * np.exp(-( (r - b_pos) / b_width)**k_exp) + b_SOL + c_slope_SOL * r
+
+fped_exp = np.vectorize(_fped_exp)
+# #%%
+# import matplotlib.pyplot as plt
+# fig, ax = plt.subplots()
+# x = np.linspace(-.1, 1, 100)
+# ax.plot(x, fexp_py(x, 1, 0.05, 1, 0.0))
+
 #%% implementations using sympy (symbolic math), which is more elegant in particular if we want to apply derivatives, print the functions as LaTeX, etc.
 import matplotlib.pyplot as plt
 from sympy import symbols, diff, exp, simplify, lambdify

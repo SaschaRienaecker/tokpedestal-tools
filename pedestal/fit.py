@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit, Bounds
 from scipy.interpolate import interp1d
-from .fped_functions import fped
+from pedestal.fped_functions import fped as fped_mtanh, fped_exp
 
 def huber_loss(residuals, delta=1.0): # presently not used, but could be if we want to fine-tune the loss function
     """Huber loss function. The delta parameter controls the threshold between linear and quadratic loss."""
@@ -21,14 +21,14 @@ def smooth_transition(x, x0, w):
     """Serves as a smooth transition between the pedestal function and the proffit profile, with width w. Better than lin,_transition."""
     return 0.5 * (1 + np.tanh((x - x0) / w))
 
-def objective_function(params, x, y, f_core, w=0.1, delta=1.0):
+def objective_function(params, x, y, f_core, w=0.1, fped=fped_mtanh):
     """Objective function to minimize. It returns the sum of the squared residuals between the data and the model."""   
-    model_values = full_profile_with_pedestal(x, params, f_core, w, positive_only=False)
+    model_values = full_profile_with_pedestal(x, params, f_core, w, positive_only=False, fped=fped)
     # residuals = np.sum(np.abs(model_values - y)) # linear residuals, should be less prone to outliers but maybe not always good for fitting.
     residuals = np.sum((model_values - y)**2)
     return residuals
     
-def full_profile_with_pedestal(x, params, f_core, w=0.1, delta=1.0, positive_only=True):
+def full_profile_with_pedestal(x, params, f_core, w=0.1, positive_only=True, fped=fped_mtanh):
         """Smooth transition between the pedestal function and the core profile function, with width w.
 
         Args:
