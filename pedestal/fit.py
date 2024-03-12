@@ -23,12 +23,12 @@ def smooth_transition(x, x0, w):
 
 def objective_function(params, x, y, f_core, w=0.1, fped=fped_mtanh):
     """Objective function to minimize. It returns the sum of the squared residuals between the data and the model."""   
-    model_values = full_profile_with_pedestal(x, params, f_core, w, positive_only=False, fped=fped)
+    model_values = full_profile_with_pedestal(x, params, f_core, w=w, fped=fped, positive_only=False)
     # residuals = np.sum(np.abs(model_values - y)) # linear residuals, should be less prone to outliers but maybe not always good for fitting.
     residuals = np.sum((model_values - y)**2)
     return residuals
     
-def full_profile_with_pedestal(x, params, f_core, w=0.1, positive_only=True, fped=fped_mtanh):
+def full_profile_with_pedestal(x, params, f_core, w=0.1, fped=fped_mtanh, positive_only=True):
         """Smooth transition between the pedestal function and the core profile function, with width w.
 
         Args:
